@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36616.10 d17.14
+VisualStudioVersion = 17.14.36616.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguroX.PropostaService", "SeguroX.PropostaService\SeguroX.PropostaService.csproj", "{68C2F97F-8145-48CF-832C-8EB19D79BCC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguroX.ContratacaoService", "SeguroX.ContratacaoService\SeguroX.ContratacaoService.csproj", "{7BCE22E8-FD28-4B5B-91E7-0B6142BB6360}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Propostas", "Propostas", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contratos", "Contratos", "{A638E4BD-D41A-4C6E-A5F1-9010CA3EF123}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguroX.PropostaService.Tests", "SeguroX.PropostaService.Tests\SeguroX.PropostaService.Tests.csproj", "{F63BCB9B-005F-4359-B236-DA9872473A09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +27,18 @@ Global
 		{7BCE22E8-FD28-4B5B-91E7-0B6142BB6360}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BCE22E8-FD28-4B5B-91E7-0B6142BB6360}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BCE22E8-FD28-4B5B-91E7-0B6142BB6360}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F63BCB9B-005F-4359-B236-DA9872473A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F63BCB9B-005F-4359-B236-DA9872473A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F63BCB9B-005F-4359-B236-DA9872473A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F63BCB9B-005F-4359-B236-DA9872473A09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{68C2F97F-8145-48CF-832C-8EB19D79BCC0} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{7BCE22E8-FD28-4B5B-91E7-0B6142BB6360} = {A638E4BD-D41A-4C6E-A5F1-9010CA3EF123}
+		{F63BCB9B-005F-4359-B236-DA9872473A09} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A1CC63C4-E67D-489F-A5D0-8E4EF1DED6C9}

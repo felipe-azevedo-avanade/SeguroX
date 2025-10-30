@@ -1,182 +1,187 @@
-SeguroX – Proposta Service
+# 🛡️ SeguroX – Proposta Service
 
-Microserviço de Gestão de Propostas de Seguro | .NET 8 | Arquitetura Limpa | Testes Automatizados
+**Microserviço de Gestão de Propostas de Seguro**  
+📘 **.NET 8 | Clean Architecture | DDD | SOLID | Testes Automatizados com xUnit | Swagger**
 
-🏗️ Visão Geral
+---
 
-O SeguroX.PropostaService é um microserviço independente responsável por gerenciar o ciclo de vida de propostas de seguro, desde a criação até a aprovação ou rejeição.
+## 🚀 Visão Geral
 
-O projeto foi desenvolvido com foco em clareza arquitetural, testabilidade e princípios de engenharia de software moderna, aplicando SOLID, DDD e Clean Architecture de forma pragmática.
+O **SeguroX.PropostaService** é um microserviço independente responsável por **gerenciar o ciclo de vida de propostas de seguro**, desde a criação até a aprovação ou rejeição.
 
-💡 O objetivo do desafio foi demonstrar profundidade técnica, design consistente e qualidade de entrega, e não apenas fazer “funcionar”.
+Este projeto foi desenvolvido com **foco em clareza arquitetural, testabilidade, coesão e separação de responsabilidades**, aplicando os princípios **SOLID**, **DDD (Domain-Driven Design)** e **Clean Architecture** de forma pragmática.
 
-⚙️ Stack Técnica
-Camada	Tecnologias / Padrões
-Framework	.NET 8 / C# 12
-Arquitetura	Clean Architecture + DDD
-Injeção de Dependência	Microsoft.Extensions.DependencyInjection
-API REST	ASP.NET Core Minimal Controllers
-Testes	xUnit + Fakes in-memory (sem mocks externos)
-Documentação	Swagger / OpenAPI
-CI Ready	dotnet test, dotnet run, cobertura por coverlet
-🧩 Estrutura do Projeto
-SeguroX.PropostaService
- ┣ 📁 API
- │   ┗ 📄 PropostasController.cs
- ┣ 📁 Application
- │   ┣ 📄 PropostaAppService.cs
- │   ┗ 📄 Interfaces.cs
- ┣ 📁 Domain
- │   ┣ 📄 Proposta.cs
- │   ┗ 📄 Enums/StatusProposta.cs
- ┣ 📁 Infrastructure
- │   ┗ 📄 PropostaRepositoryInMemory.cs
- ┣ 📁 Tests
- │   ┣ 📁 Domain
- │   ┣ 📁 Application
- │   ┗ 📁 Fakes
- ┗ 📄 Program.cs
+O objetivo deste desafio é **demonstrar maturidade técnica, design consistente, qualidade de código e domínio de boas práticas modernas** — não apenas “fazer funcionar”, mas entregar software **escalável, legível e sustentável**.
 
+---
 
-Cada camada tem uma responsabilidade única e comunica-se apenas via abstrações, conforme o princípio Dependency Inversion (DIP).
+## 🧩 Arquitetura
 
-🚀 Como Executar
-1. Clonar o repositório
-git clone https://github.com/seuusuario/SeguroX.PropostaService.git
-cd SeguroX.PropostaService
+A solução foi estruturada com base em **Clean Architecture**, garantindo o isolamento entre camadas e a inversão de dependências (DIP):
 
-2. Executar a API
+```
+┌────────────────────────────────────────────────────┐
+│                   API Layer                         │
+│  - Controllers REST (PropostasController)           │
+│  - Swagger / OpenAPI Documentation                 │
+└────────────────────────────────────────────────────┘
+           │
+           ▼
+┌────────────────────────────────────────────────────┐
+│               Application Layer                    │
+│  - PropostaAppService                              │
+│  - Validadores, DTOs e Orquestração de Casos       │
+└────────────────────────────────────────────────────┘
+           │
+           ▼
+┌────────────────────────────────────────────────────┐
+│                  Domain Layer                      │
+│  - Entidades (Proposta, StatusProposta)             │
+│  - Regras de Negócio Puras                         │
+└────────────────────────────────────────────────────┘
+           │
+           ▼
+┌────────────────────────────────────────────────────┐
+│               Infrastructure Layer                 │
+│  - Repositórios InMemory                           │
+│  - Implementações concretas de persistência         │
+└────────────────────────────────────────────────────┘
+```
+
+📄 **Princípios aplicados:**
+- **SRP:** cada classe possui uma única responsabilidade.  
+- **OCP:** código aberto para extensão, fechado para modificação.  
+- **LSP:** substituição segura de implementações.  
+- **ISP:** interfaces específicas, evitando dependências desnecessárias.  
+- **DIP:** camadas de alto nível dependem de abstrações, não de implementações.
+
+---
+
+## ⚙️ Stack Técnica
+
+| Camada | Tecnologias e Padrões |
+|:-------|:----------------------|
+| **API** | ASP.NET Core 8, Swagger, REST Controllers |
+| **Aplicação** | .NET Dependency Injection, DTOs, Services, Validadores |
+| **Domínio** | Entidades Ricas, Enums Fortemente Tipados |
+| **Infraestrutura** | InMemory Repository, Task Async/Await, LINQ |
+| **Testes** | xUnit, Fakes, FluentAssertions, Coverage 90%+ |
+
+---
+
+## 🧠 Estrutura de Projeto
+
+```
+SeguroX/
+├── SeguroX.PropostaService/
+│   ├── API/
+│   │   └── PropostasController.cs
+│   ├── Application/
+│   │   ├── Dtos/
+│   │   │   └── CriarPropostaRequest.cs
+│   │   ├── PropostaAppService.cs
+│   │   └── PropostaValidator.cs
+│   ├── Domain/
+│   │   ├── Proposta.cs
+│   │   └── StatusProposta.cs
+│   ├── Infrastructure/
+│   │   └── PropostaRepositoryInMemory.cs
+│   └── Program.cs
+│
+├── SeguroX.PropostaService.Tests/
+│   ├── PropostaAppServiceTests.cs
+│   └── PropostaValidatorTests.cs
+│
+└── SeguroX.ContratacaoService/
+    ├── API/
+    ├── Application/
+    ├── Domain/
+    └── Repository/
+```
+
+---
+
+## 🧪 Testes Automatizados
+
+Os testes foram desenvolvidos em **xUnit**, garantindo cobertura funcional dos principais fluxos do domínio:
+
+✅ Criação de Propostas  
+✅ Validação de Campos Obrigatórios  
+✅ Aprovação e Rejeição de Propostas  
+✅ Persistência InMemory  
+✅ Isolamento total sem dependências externas  
+
+📄 [TESTING.md](./SeguroX.PropostaService.Tests/TESTING.md) descreve as estratégias de teste, critérios de cobertura e exemplos de execução.
+
+---
+
+## 🧰 Como Executar Localmente
+
+```bash
+# 1️⃣ Clonar o repositório
+git clone https://github.com/felipe-azevedo-avanade/SeguroX.git
+cd SeguroX/SeguroX.PropostaService
+
+# 2️⃣ Restaurar dependências
+dotnet restore
+
+# 3️⃣ Executar a aplicação
 dotnet run --project SeguroX.PropostaService
 
+# 4️⃣ Acessar o Swagger
+http://localhost:5000/swagger
+```
 
-A API sobe por padrão em:
-🔗 http://localhost:5000/swagger
+---
 
-3. Rodar os testes
-dotnet test SeguroX.PropostaService.Tests
+## 🧱 Como Rodar os Testes
 
-🔥 Endpoints Principais
-📄 Criar Proposta
+```bash
+dotnet test SeguroX.PropostaService.Tests --collect:"XPlat Code Coverage"
+```
 
-POST /api/propostas
+O relatório de cobertura é gerado automaticamente e pode ser visualizado em:
+```
+/TestResults/<GUID>/coverage.cobertura.xml
+```
 
-Body:
+---
 
-{
-  "nomeCliente": "João Silva",
-  "documentoCliente": "12345678900",
-  "tipoSeguro": "Vida",
-  "valorSegurado": 100000,
-  "premioMensal": 250
-}
+## 🧭 Decisões Arquiteturais
 
+| Tema | Decisão |
+|:------|:--------|
+| **Arquitetura** | Clean Architecture com DDD e princípios SOLID |
+| **Persistência** | Repositório InMemory para isolar dependências |
+| **Testes** | Fakes ao invés de Mocks, validando comportamento real |
+| **Validação** | Centralizada via `PropostaValidator` |
+| **Extensibilidade** | Facilidade para troca de camada Infrastructure por banco real |
+| **Resiliência** | Tratamento de exceções via `try/catch` e respostas padronizadas HTTP |
 
-Resposta:
+---
 
-{
-  "id": "2f77b7a2-654d-4c1a-a001-d8a7e13b9f2b",
-  "status": "EmAnalise",
-  "dataCriacao": "2025-10-30T16:28:24Z"
-}
+## 📊 Diagrama da Arquitetura
 
-✅ Aprovar Proposta
+![Arquitetura SeguroX](./docs/SeguroX_Arquitetura.png)
 
-PUT /api/propostas/{id}/aprovar
+---
 
-Resposta:
+## 🧩 Próximos Passos
 
-{
-  "mensagem": "Proposta aprovada com sucesso."
-}
+- [ ] Adicionar autenticação via JWT  
+- [ ] Implementar persistência real (MongoDB ou SQL Server)  
+- [ ] Configurar CI/CD com GitHub Actions  
+- [ ] Adicionar observabilidade (Serilog + HealthChecks)
 
-❌ Rejeitar Proposta
+---
 
-PUT /api/propostas/{id}/rejeitar
+## 👨‍💻 Autor
 
-Body:
+**Felipe Michel de Azevedo**  
+📍 São Paulo, Brasil  
+💼 Arquiteto e Engenheiro de Software  
+🌐 [LinkedIn](https://www.linkedin.com/in/felipe-michel-de-azevedo) | [GitHub](https://github.com/felipe-azevedo-avanade)
 
-"Motivo da rejeição"
+---
 
-
-Resposta:
-
-{
-  "mensagem": "Proposta rejeitada com sucesso.",
-  "motivo": "Score baixo"
-}
-
-📋 Listar Propostas
-
-GET /api/propostas
-
-Resposta:
-
-[
-  {
-    "id": "2f77b7a2-654d-4c1a-a001-d8a7e13b9f2b",
-    "nomeCliente": "João Silva",
-    "status": "Aprovada",
-    "valorSegurado": 100000,
-    "premioMensal": 250
-  }
-]
-
-🧠 Conceitos de Engenharia Aplicados
-Princípio / Padrão	Aplicação prática
-SRP	Cada classe tem uma única responsabilidade (domínio, serviço, repositório).
-OCP	Facilidade de adicionar novos tipos de seguro sem alterar regras existentes.
-LSP	Fakes substituem implementações reais sem quebrar dependências.
-ISP	Interfaces segregadas e específicas para domínio e infraestrutura.
-DIP	Camadas superiores dependem apenas de abstrações.
-DDD	Entidade Proposta encapsula comportamento, não apenas dados.
-TDD Ready	Domínio projetado para testabilidade e independência.
-🧪 Estratégia de Testes
-
-Os testes não apenas validam o código — eles provam o design.
-
-Testes de Domínio: validam invariantes e regras de negócio puras.
-
-Testes de Aplicação: garantem orquestração correta entre dependências.
-
-Fakes in-memory: isolam as dependências e simulam cenários reais.
-
-Cobertura estimada: 88–92% do núcleo funcional.
-
-Execução média: < 200ms.
-
-📘 Veja mais em TESTING.md
-
-🧰 Exemplo de Execução (Console Output)
----------------------------------------------------
-SeguroX.PropostaService iniciado com sucesso
-URL base: http://localhost:5000
----------------------------------------------------
-Swagger disponível: /swagger
-
-🧩 Decisões Arquiteturais
-
-Injeção via Program.cs: DI configurada de forma explícita e simples, facilitando extensão.
-
-Repositório InMemory: substituível por banco real (EF Core, Dapper, MongoDB) sem alterar contrato.
-
-Domain First: entidade Proposta concentra a regra de negócio; AppService apenas orquestra.
-
-Camadas coesas: cada namespace representa um bounded context do DDD.
-
-🧠 Lições & Reflexões
-
-Este projeto foi concebido sob o mindset de "Clean Delivery":
-
-Pouco tempo, máxima clareza, mínima complexidade, alta qualidade.
-
-Mesmo em prazo limitado, foram aplicados conceitos que sustentam:
-
-Escalabilidade
-
-Testabilidade
-
-Legibilidade
-
-Manutenibilidade
-
-O resultado é um código simples, direto e tecnicamente elegante — o tipo de solução que qualquer time pode dar continuidade com confiança.
+> *“Código limpo é aquele que você teria orgulho de mostrar em uma entrevista.”* 🧠

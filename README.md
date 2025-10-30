@@ -7,53 +7,58 @@
 
 ## 🚀 Visão Geral
 
-O **SeguroX.PropostaService** é um microserviço independente responsável por **gerenciar o ciclo de vida de propostas de seguro**, desde a criação até a aprovação ou rejeição.
+O **SeguroX.PropostaService** é um microserviço independente responsável por **gerenciar o ciclo de vida de propostas de seguro**, desde a criação até a aprovação ou rejeição.  
 
-Este projeto foi desenvolvido com **foco em clareza arquitetural, testabilidade, coesão e separação de responsabilidades**, aplicando os princípios **SOLID**, **DDD (Domain-Driven Design)** e **Clean Architecture** de forma pragmática.
+O projeto faz parte de uma solução integrada com o **SeguroX.ContratacaoService**, que é responsável por gerar contratos a partir das propostas aprovadas — ou seja, **as APIs interagem entre si**:  
+> 🔗 *Uma proposta só pode ser contratada se estiver aprovada no serviço de Propostas.*
 
-O objetivo deste desafio é **demonstrar maturidade técnica, design consistente, qualidade de código e domínio de boas práticas modernas** — não apenas “fazer funcionar”, mas entregar software **escalável, legível e sustentável**.
+Ambos os serviços podem ser executados simultaneamente e testados via **Swagger**:
+- 🟩 **PropostaService:** http://localhost:5000/swagger  
+- 🟦 **ContratacaoService:** http://localhost:5001/swagger  
+
+> ⚠️ **Docker não implementado localmente** devido a limitações de ambiente na máquina de desenvolvimento.  
+> A execução é feita diretamente via `dotnet run` para ambos os microserviços.
 
 ---
 
 ## 🧩 Arquitetura
 
-A solução foi estruturada com base em **Clean Architecture**, garantindo o isolamento entre camadas e a inversão de dependências (DIP):
+A solução segue os princípios da **Clean Architecture**, garantindo baixo acoplamento, alta coesão e independência entre camadas:
 
 ```
 ┌────────────────────────────────────────────────────┐
 │                   API Layer                         │
-│  - Controllers REST (PropostasController)           │
-│  - Swagger / OpenAPI Documentation                 │
+│  - Controllers REST (PropostasController, Contratos)│
+│  - Swagger / OpenAPI Documentation                  │
 └────────────────────────────────────────────────────┘
            │
            ▼
 ┌────────────────────────────────────────────────────┐
 │               Application Layer                    │
-│  - PropostaAppService                              │
-│  - Validadores, DTOs e Orquestração de Casos       │
+│  - AppServices                                     │
+│  - DTOs, Validadores, Orquestração de Casos        │
 └────────────────────────────────────────────────────┘
            │
            ▼
 ┌────────────────────────────────────────────────────┐
 │                  Domain Layer                      │
-│  - Entidades (Proposta, StatusProposta)             │
-│  - Regras de Negócio Puras                         │
+│  - Entidades e Regras de Negócio Puras             │
+│  - Proposta, Contrato, StatusProposta              │
 └────────────────────────────────────────────────────┘
            │
            ▼
 ┌────────────────────────────────────────────────────┐
 │               Infrastructure Layer                 │
 │  - Repositórios InMemory                           │
-│  - Implementações concretas de persistência         │
+│  - Persistência simulada sem dependências externas  │
 └────────────────────────────────────────────────────┘
 ```
 
 📄 **Princípios aplicados:**
-- **SRP:** cada classe possui uma única responsabilidade.  
-- **OCP:** código aberto para extensão, fechado para modificação.  
-- **LSP:** substituição segura de implementações.  
-- **ISP:** interfaces específicas, evitando dependências desnecessárias.  
-- **DIP:** camadas de alto nível dependem de abstrações, não de implementações.
+- **SRP:** cada classe tem uma responsabilidade clara.  
+- **OCP:** fácil extensão sem modificação de código existente.  
+- **DIP:** camadas de alto nível dependem de abstrações.  
+- **DDD:** separação explícita entre domínio, aplicação e infraestrutura.
 
 ---
 
@@ -62,10 +67,10 @@ A solução foi estruturada com base em **Clean Architecture**, garantindo o iso
 | Camada | Tecnologias e Padrões |
 |:-------|:----------------------|
 | **API** | ASP.NET Core 8, Swagger, REST Controllers |
-| **Aplicação** | .NET Dependency Injection, DTOs, Services, Validadores |
-| **Domínio** | Entidades Ricas, Enums Fortemente Tipados |
-| **Infraestrutura** | InMemory Repository, Task Async/Await, LINQ |
-| **Testes** | xUnit, Fakes, FluentAssertions, Coverage 90%+ |
+| **Aplicação** | Dependency Injection, DTOs, Validadores, Orquestração |
+| **Domínio** | Entidades Ricas e Enums Tipados |
+| **Infraestrutura** | Repositório InMemory, Task Async/Await, LINQ |
+| **Testes** | xUnit, Fakes, FluentAssertions |
 
 ---
 
@@ -88,30 +93,36 @@ SeguroX/
 │   │   └── PropostaRepositoryInMemory.cs
 │   └── Program.cs
 │
-├── SeguroX.PropostaService.Tests/
-│   ├── PropostaAppServiceTests.cs
-│   └── PropostaValidatorTests.cs
+├── SeguroX.ContratacaoService/
+│   ├── API/
+│   │   └── ContratacoesController.cs
+│   ├── Application/
+│   │   ├── ContratacaoAppService.cs
+│   │   └── IContratacaoRepository.cs
+│   ├── Domain/
+│   │   ├── Contrato.cs
+│   │   └── PropostaDto.cs
+│   └── Repository/
+│       └── ContratacaoRepositoryInMemory.cs
 │
-└── SeguroX.ContratacaoService/
-    ├── API/
-    ├── Application/
-    ├── Domain/
-    └── Repository/
+└── SeguroX.PropostaService.Tests/
+    ├── PropostaAppServiceTests.cs
+    └── PropostaValidatorTests.cs
 ```
 
 ---
 
 ## 🧪 Testes Automatizados
 
-Os testes foram desenvolvidos em **xUnit**, garantindo cobertura funcional dos principais fluxos do domínio:
+Os testes unitários garantem **cobertura funcional dos fluxos principais** de negócio:
 
 ✅ Criação de Propostas  
 ✅ Validação de Campos Obrigatórios  
 ✅ Aprovação e Rejeição de Propostas  
-✅ Persistência InMemory  
-✅ Isolamento total sem dependências externas  
+✅ Contratação dependente de proposta aprovada  
+✅ Persistência InMemory (sem banco real)  
 
-📄 [TESTING.md](./SeguroX.PropostaService.Tests/TESTING.md) descreve as estratégias de teste, critérios de cobertura e exemplos de execução.
+📄 [TESTING.md](./SeguroX.PropostaService.Tests/TESTING.md) descreve as estratégias de teste, cobertura e critérios de assertividade.
 
 ---
 
@@ -120,30 +131,31 @@ Os testes foram desenvolvidos em **xUnit**, garantindo cobertura funcional dos p
 ```bash
 # 1️⃣ Clonar o repositório
 git clone https://github.com/felipe-azevedo-avanade/SeguroX.git
-cd SeguroX/SeguroX.PropostaService
+cd SeguroX
 
 # 2️⃣ Restaurar dependências
 dotnet restore
 
-# 3️⃣ Executar a aplicação
-dotnet run --project SeguroX.PropostaService
+# 3️⃣ Executar os serviços
+dotnet run --project SeguroX.PropostaService      # Porta 5000
+dotnet run --project SeguroX.ContratacaoService   # Porta 5001
 
-# 4️⃣ Acessar o Swagger
-http://localhost:5000/swagger
+# 4️⃣ Acessar os Swaggers
+Propostas:   http://localhost:5000/swagger
+Contratação: http://localhost:5001/swagger
 ```
 
 ---
 
-## 🧱 Como Rodar os Testes
+## 🔄 Integração entre Serviços
 
-```bash
-dotnet test SeguroX.PropostaService.Tests --collect:"XPlat Code Coverage"
-```
+O fluxo principal de negócio pode ser validado 100% via Swagger:
 
-O relatório de cobertura é gerado automaticamente e pode ser visualizado em:
-```
-/TestResults/<GUID>/coverage.cobertura.xml
-```
+1️⃣ Criar uma **Proposta** no serviço `PropostaService`  
+2️⃣ Aprovar a proposta (endpoint `PUT /api/propostas/{id}/aprovar`)  
+3️⃣ Criar um **Contrato** no `ContratacaoService` referenciando o ID da proposta aprovada  
+
+Se a proposta ainda estiver em análise ou reprovada, o contrato **não será criado** — regra validada no domínio.
 
 ---
 
@@ -151,12 +163,13 @@ O relatório de cobertura é gerado automaticamente e pode ser visualizado em:
 
 | Tema | Decisão |
 |:------|:--------|
-| **Arquitetura** | Clean Architecture com DDD e princípios SOLID |
-| **Persistência** | Repositório InMemory para isolar dependências |
-| **Testes** | Fakes ao invés de Mocks, validando comportamento real |
-| **Validação** | Centralizada via `PropostaValidator` |
-| **Extensibilidade** | Facilidade para troca de camada Infrastructure por banco real |
-| **Resiliência** | Tratamento de exceções via `try/catch` e respostas padronizadas HTTP |
+| **Arquitetura** | Clean Architecture + DDD + SOLID |
+| **Persistência** | InMemory simulada, isolada por repositórios |
+| **Testes** | xUnit + Fakes com alta cobertura |
+| **Validação** | `PropostaValidator` e `ContratacaoValidator` centralizam regras |
+| **Interação entre serviços** | Comunicação simples via chamadas REST simuladas |
+| **Execução** | Sem Docker; execução local via `dotnet run` |
+| **Portas** | PropostaService (5000), ContratacaoService (5001) |
 
 ---
 
@@ -168,10 +181,10 @@ O relatório de cobertura é gerado automaticamente e pode ser visualizado em:
 
 ## 🧩 Próximos Passos
 
-- [ ] Adicionar autenticação via JWT  
 - [ ] Implementar persistência real (MongoDB ou SQL Server)  
-- [ ] Configurar CI/CD com GitHub Actions  
-- [ ] Adicionar observabilidade (Serilog + HealthChecks)
+- [ ] Adicionar autenticação JWT  
+- [ ] Configurar CI/CD (GitHub Actions)  
+- [ ] Integrar mensageria (RabbitMQ ou Kafka)
 
 ---
 

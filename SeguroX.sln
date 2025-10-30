@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36616.10 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguroX.PropostaService", "SeguroX.PropostaService\SeguroX.PropostaService.csproj", "{68C2F97F-8145-48CF-832C-8EB19D79BCC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguroX.ContratacaoService", "SeguroX.ContratacaoService\SeguroX.ContratacaoService.csproj", "{7BCE22E8-FD28-4B5B-91E7-0B6142BB6360}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68C2F97F-8145-48CF-832C-8EB19D79BCC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68C2F97F-8145-48CF-832C-8EB19D79BCC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68C2F97F-8145-48CF-832C-8EB19D79BCC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68C2F97F-8145-48CF-832C-8EB19D79BCC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BCE22E8-FD28-4B5B-91E7-0B6142BB6360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BCE22E8-FD28-4B5B-91E7-0B6142BB6360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BCE22E8-FD28-4B5B-91E7-0B6142BB6360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BCE22E8-FD28-4B5B-91E7-0B6142BB6360}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1CC63C4-E67D-489F-A5D0-8E4EF1DED6C9}
+	EndGlobalSection
+EndGlobal

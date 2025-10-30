@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeguroX.PropostaService.Application;
 using SeguroX.PropostaService.Application.Dtos;
+using SeguroX.PropostaService.Application.Ports;
 using SeguroX.PropostaService.Domain;
 
 namespace SeguroX.PropostaService.API

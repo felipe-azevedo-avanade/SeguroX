@@ -1,4 +1,5 @@
 ﻿using SeguroX.PropostaService.Application;
+using SeguroX.PropostaService.Application.Ports;
 using SeguroX.PropostaService.Domain;
 using SeguroX.PropostaService.Infrastructure;
 

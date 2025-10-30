@@ -1,4 +1,5 @@
-﻿using SeguroX.PropostaService.Domain;
+﻿using SeguroX.PropostaService.Application.Ports;
+using SeguroX.PropostaService.Domain;
 
 namespace SeguroX.PropostaService.Application
 {

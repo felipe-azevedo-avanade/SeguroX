@@ -1,6 +1,6 @@
 ﻿using SeguroX.PropostaService.Domain;
 
-namespace SeguroX.PropostaService.Application
+namespace SeguroX.PropostaService.Application.Ports
 {
     public interface IPropostaValidator
     {

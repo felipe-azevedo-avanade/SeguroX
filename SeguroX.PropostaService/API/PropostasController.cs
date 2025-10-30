@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeguroX.PropostaService.Application;
+using SeguroX.PropostaService.Application.Dtos;
 using SeguroX.PropostaService.Domain;
 
 namespace SeguroX.PropostaService.API
@@ -34,14 +35,37 @@ namespace SeguroX.PropostaService.API
             return Ok(proposta);
         }
 
+
         [HttpPost]
-        [HttpPost]
-        public async Task<IActionResult> Criar([FromBody] Proposta proposta)
+        public async Task<IActionResult> Criar([FromBody] CriarPropostaRequest dto)
         {
             try
             {
-                var nova = await _app.CriarAsync(proposta);
-                return CreatedAtAction(nameof(ObterPorId), new { id = nova.Id }, nova);
+                var proposta = await _app.CriarAsync(
+                    dto.NomeCliente,
+                    dto.TipoSeguro,
+                    dto.ValorSegurado,
+                    dto.PremioMensal,
+                    dto.DocumentoCliente
+                );
+
+                var resp = new PropostaResponse
+                {
+                    Id = proposta.Id,
+                    NumeroProposta = proposta.NumeroProposta,
+                    NomeCliente = proposta.NomeCliente,
+                    DocumentoCliente = proposta.DocumentoCliente,
+                    TipoSeguro = proposta.TipoSeguro,
+                    ValorSegurado = proposta.ValorSegurado,
+                    PremioMensal = proposta.PremioMensal,
+                    DataCriacao = proposta.DataCriacao,
+                    DataAprovacao = proposta.DataAprovacao,
+                    DataExpiracao = proposta.DataExpiracao,
+                    Status = proposta.Status,
+                    Observacoes = proposta.Observacoes
+                };
+
+                return CreatedAtAction(nameof(ObterPorId), new { id = resp.Id }, resp);
             }
             catch (ArgumentException ex)
             {
